@@ -1,5 +1,4 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { dashboard } from '@/routes';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DashboardPageProps } from '@/types/inertia';
