@@ -31,7 +31,7 @@ class DrugController extends Controller
 
         $categories = Drug::distinct()->pluck('category')->filter()->values();
 
-        return Inertia::render('Pharmacy/Drugs/Index', [
+        return Inertia::render('pharmacy/drugs/index', [
             'drugs' => $drugs,
             'filters' => $request->only(['search', 'category', 'status']),
             'categories' => $categories,
@@ -41,7 +41,7 @@ class DrugController extends Controller
     public function create(): Response
     {
         $this->authorize('create_drugs');
-        return Inertia::render('Pharmacy/Drugs/Create');
+        return Inertia::render('pharmacy/drugs/create');
     }
 
     public function store(DrugStoreRequest $request): RedirectResponse
@@ -53,7 +53,7 @@ class DrugController extends Controller
     public function edit(Drug $drug): Response
     {
         $this->authorize('edit_drugs');
-        return Inertia::render('Pharmacy/Drugs/Edit', ['drug' => $drug]);
+        return Inertia::render('pharmacy/drugs/edit', ['drug' => $drug]);
     }
 
     public function update(DrugStoreRequest $request, Drug $drug): RedirectResponse

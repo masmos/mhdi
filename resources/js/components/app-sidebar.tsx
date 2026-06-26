@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { BellRing, BookOpen, Boxes, BoxSelect, FileChartColumn, FolderGit2, HandHeart, LayoutGrid, Package, PackagePlus, Pill, ScrollText, Shield, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -22,10 +22,60 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Drugs',
+        href: '/drugs',
+        icon: Pill,
+    },
+    {
+        title: 'Suppliers',
+        href: '/suppliers',
+        icon: Package,
+    },
+    {
+        title: 'Batches',
+        href: '/suppliers',
+        icon: Boxes,
+    },
+    {
+        title: 'Receive Stock',
+        href: '/stock',
+        icon: PackagePlus,
+    },
+    {
+        title: 'Dispense',
+        href: '/stock',
+        icon: HandHeart,
+    },
+    {
+        title: 'Alerts',
+        href: '/stock',
+        icon: BellRing,
+    },
+    {
+        title: 'Reports',
+        href: '/stock',
+        icon: FileChartColumn,
+    },
+    {
+        title: 'Audit Log',
+        href: '/pharmacy/stock',
+        icon: ScrollText,
+    },
+    {
+        title: 'Roles & Permissions',
+        href: '/roles',
+        icon: Shield,
+    },
+    {
+        title: 'User Management',
+        href: '/users',
+        icon: Users,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
-    {
+    /* {
         title: 'Repository',
         href: 'https://github.com/laravel/react-starter-kit',
         icon: FolderGit2,
@@ -34,7 +84,7 @@ const footerNavItems: NavItem[] = [
         title: 'Documentation',
         href: 'https://laravel.com/docs/starter-kits#react',
         icon: BookOpen,
-    },
+    }, */
 ];
 
 export function AppSidebar() {
