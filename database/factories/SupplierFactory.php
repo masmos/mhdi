@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Generator as Faker;
+use Faker\Factory as FakerFactory;
 
 /**
  * @extends Factory<Supplier>
@@ -15,22 +15,24 @@ class SupplierFactory extends Factory
 
     public function definition(): array
     {
+        $faker = FakerFactory::create();
+        
         return [
-            'name' => $this->faker->company(),
-            'contact_person' => $this->faker->name(),
-            'phone' => $this->faker->phoneNumber(),
-            'email' => $this->faker->safeEmail(),
-            'address' => $this->faker->address(),
-            'tax_id' => strtoupper($this->faker->bothify('TIN-########')),
-            'bank_name' => $this->faker->randomElement([
+            'name' => $faker->company(),
+            'contact_person' => $faker->name(),
+            'phone' => $faker->phoneNumber(),
+            'email' => $faker->safeEmail(),
+            'address' => $faker->address(),
+            'tax_id' => strtoupper($faker->bothify('TIN-########')),
+            'bank_name' => $faker->randomElement([
                 'Stanbic Bank',
                 'Centenary Bank',
                 'DFCU Bank',
                 'Absa Bank',
                 'Equity Bank'
             ]),
-            'bank_account' => $this->faker->bankAccountNumber(),
-            'notes' => $this->faker->optional()->sentence(),
+            'bank_account' => $faker->bankAccountNumber(),
+            'notes' => $faker->optional()->sentence(),
             'is_active' => true,
         ];
     }
