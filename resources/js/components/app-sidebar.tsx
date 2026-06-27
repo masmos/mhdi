@@ -39,17 +39,17 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Receive Stock',
-        href: '/stock',
+        href: '/batches/create',
         icon: PackagePlus,
     },
     {
         title: 'Dispense',
-        href: '/stock',
+        href: '/dispense',
         icon: HandHeart,
     },
     {
         title: 'Alerts',
-        href: '/stock',
+        href: '/alerts',
         icon: BellRing,
     },
     {

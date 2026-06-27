@@ -12,6 +12,7 @@ use App\Services\InventoryService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -44,13 +45,15 @@ class BatchController extends Controller
         return Inertia::render('pharmacy/batches/index', [
             'batches' => $batches,
             'filters' => $request->only(['search', 'status', 'expiry']),
+            'suppliers' => Supplier::all(),
+            'drugs' => Drug::all(),
         ]);
     }
 
     public function create(): Response
     {
         $this->authorize('create_batches');
-        return Inertia::render('Pharmacy/Batches/Create', [
+        return Inertia::render('pharmacy/batches/create', [
             'drugs' => \App\Models\Drug::active()->get(['id', 'name']),
             'suppliers' => \App\Models\Supplier::active()->get(['id', 'name']),
         ]);
@@ -58,11 +61,36 @@ class BatchController extends Controller
 
     public function store(BatchStoreRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        $data['initial_quantity'] = $data['quantity'];
-        $data['status'] = 'active';
-        $batch = Batch::create($data);
-        return redirect()->route('batches.index')->with('success', "Batch {$batch->batch_number} created.");
+        try {
+            DB::transaction(function () use ($request) {
+                $validated = $request->validated();
+
+                foreach ($validated['items'] as $item) {
+                    Batch::create([
+                        'supplier_id' => $validated['supplier_id'],
+                        'received_date' => $validated['received_date'],
+                        'notes' => $validated['notes'] ?? null,
+                        'drug_id' => $item['drug_id'],
+                        'batch_number' => $item['batch_number'],
+                        'quantity' => $item['quantity'],
+                        'initial_quantity' => $item['quantity'],
+                        'unit_cost' => $item['unit_cost'] ?? null,
+                        'manufacture_date' => $item['manufacture_date'] ?? null,
+                        'expiry_date' => $item['expiry_date'],
+                        'location' => $item['location'] ?? null,
+                        'notes' => $item['notes'] ?? null,
+                        'status' => 'active',
+                    ]);
+                }
+            });
+
+            return redirect()->route('batches.index')
+                ->with('success', 'Stock received successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Failed to create batches: ' . $e->getMessage());
+        }
     }
 
     public function show(Batch $batch): Response

@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import type { Batch, PaginatedResponse } from '@/types';
 
 import { DataTable } from '@/components/shared/DataTable';
-import BatchFormModal from './BatchFormModal';
 import BatchColumns from './BatchColumns';
+import ReceiveStock from './ReceiveStock';
 
 export default function BatchList() {
     const { props } = usePage<{ batches: Batch[] | PaginatedResponse<Batch> }>();
@@ -27,7 +27,7 @@ export default function BatchList() {
                 { id: 'drug', label: 'Drug' },
                 { id: 'supplier', label: 'Supplier' },
             ]}
-            actions={<BatchFormModal />}
+            actions={<ReceiveStock />}
         />
     );
 }

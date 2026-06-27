@@ -5,7 +5,7 @@ import Heading from '@/components/heading';
 import EmptyState from '@/components/shared/EmptyState';
 import type { PaginatedResponse, Batch } from '@/types';
 import BatchList from '@/components/pharmacy/batches/BatchList';
-import BatchFormModal from '@/components/pharmacy/batches/BatchFormModal';
+import ReceiveStock from '@/components/pharmacy/batches/ReceiveStock';
 
 export default function BatchesIndex() {
     const { batches } = usePage<{ batches: Batch[] | PaginatedResponse<Batch> }>().props;
@@ -30,7 +30,7 @@ export default function BatchesIndex() {
                             icon={Package}
                             title="No batches yet"
                             description="Create your first batch to start tracking inventory."
-                            buttonComponent={<BatchFormModal />}
+                            buttonComponent={<ReceiveStock />}
                         />
                     </div>
                 ) : (
