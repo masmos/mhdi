@@ -15,7 +15,7 @@ class DrugFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker()->randomElement([
+            'name' => $this->faker->randomElement([
                 'Paracetamol',
                 'Amoxicillin',
                 'Ibuprofen',
@@ -27,43 +27,43 @@ class DrugFactory extends Factory
                 'Azithromycin',
                 'Cetirizine',
             ]),
-            'generic_name' => $this->faker()->randomElement([
+            'generic_name' => $this->faker->randomElement([
                 'Acetaminophen',
                 'Amoxicillin',
                 'Ibuprofen',
                 'Metronidazole',
                 'Ciprofloxacin',
             ]),
-            'category' => $this->faker()->randomElement([
+            'category' => $this->faker->randomElement([
                 'Analgesic',
                 'Antibiotic',
                 'Antimalarial',
                 'Antihistamine',
                 'Anti-inflammatory',
             ]),
-            'manufacturer' => $this->faker()->company(),
-            'unit' => $this->faker()->randomElement([
+            'manufacturer' => $this->faker->company(),
+            'unit' => $this->faker->randomElement([
                 'Tablet',
                 'Capsule',
                 'Bottle',
                 'Ampoule',
                 'Vial',
             ]),
-            'dosage_form' => $this->faker()->randomElement([
+            'dosage_form' => $this->faker->randomElement([
                 'Tablet',
                 'Capsule',
                 'Injection',
                 'Syrup',
                 'Cream',
             ]),
-            'strength' => $this->faker()->randomElement([
+            'strength' => $this->faker->randomElement([
                 '250mg',
                 '500mg',
                 '650mg',
                 '1g',
                 '5mg/ml',
             ]),
-            'reorder_level' => $this->faker()->numberBetween(10, 100),
+            'reorder_level' => $this->faker->numberBetween(10, 100),
             'is_active' => true,
         ];
     }
