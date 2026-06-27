@@ -15,21 +15,21 @@ class SupplierFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company(),
-            'contact_person' => fake()->name(),
-            'phone' => fake()->phoneNumber(),
-            'email' => fake()->safeEmail(),
-            'address' => fake()->address(),
-            'tax_id' => strtoupper(fake()->bothify('TIN-########')),
-            'bank_name' => fake()->randomElement([
+            'name' => $this->faker()->company(),
+            'contact_person' => $this->faker()->name(),
+            'phone' => $this->faker()->phoneNumber(),
+            'email' => $this->faker()->safeEmail(),
+            'address' => $this->faker()->address(),
+            'tax_id' => strtoupper($this->faker()->bothify('TIN-########')),
+            'bank_name' => $this->faker()->randomElement([
                 'Stanbic Bank',
                 'Centenary Bank',
                 'DFCU Bank',
                 'Absa Bank',
                 'Equity Bank'
             ]),
-            'bank_account' => fake()->bankAccountNumber(),
-            'notes' => fake()->optional()->sentence(),
+            'bank_account' => $this->faker()->bankAccountNumber(),
+            'notes' => $this->faker()->optional()->sentence(),
             'is_active' => true,
         ];
     }
