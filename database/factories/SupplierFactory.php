@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Factory as FakerFactory;
 
 /**
  * @extends Factory<Supplier>
@@ -15,7 +14,13 @@ class SupplierFactory extends Factory
 
     public function definition(): array
     {
-        $faker = FakerFactory::create();
+        // Try to get faker from the container or create a new instance
+        try {
+            $faker = app(\Faker\Generator::class);
+        } catch (\Exception $e) {
+            // Fallback: use the factory's faker property
+            $faker = $this->faker;
+        }
         
         return [
             'name' => $faker->company(),
