@@ -1,8 +1,8 @@
 import { Edit, Plus, Pencil, SquarePen } from 'lucide-react';
-import { FormCheckbox } from '@/components/shared/form/FormCheckbox';
 import { FormInput } from '@/components/shared/form/FormInput';
 import FormModal from '@/components/shared/FormModal';
 import { Button } from '@/components/ui/button';
+import { FormTextarea } from '@/components/shared/form/FormTextarea';
 
 export default function DrugFormModal({ drug }: any) {
     const isEdit = !!drug;
@@ -26,6 +26,7 @@ export default function DrugFormModal({ drug }: any) {
                 dosage_form: drug?.dosage_form ?? '',
                 strength: drug?.strength ?? '',
                 reorder_level: drug?.reorder_level ?? 0,
+                description: drug?.description ?? '',
                 is_active: drug ? !!drug.is_active : true,
             }}
             submitLabel={
@@ -49,80 +50,100 @@ export default function DrugFormModal({ drug }: any) {
             }
         >
             {(form) => (
-                <>
-                    <FormInput
-                        form={form}
-                        name="name"
-                        label="Drug Name"
-                        required
-                        placeholder="e.g. Amoxicillin"
-                    />
+                <div className="grid grid-cols-2 gap-4 py-2">
+                    {/* Row 1: Name (Full Width) */}
+                    <div className="col-span-2">
+                        <FormInput
+                            form={form}
+                            name="name"
+                            label="Drug Name"
+                            required
+                            placeholder="e.g. Amoxicillin"
+                        />
+                    </div>
 
-                    <FormInput
-                        form={form}
-                        name="generic_name"
-                        label="Generic Name"
-                        placeholder="e.g. Amoxicillin (if applicable)"
-                    />
+                    {/* Row 2: Generic name & Category */}
+                    <div>
+                        <FormInput
+                            form={form}
+                            name="generic_name"
+                            label="Generic Name"
+                            placeholder="e.g. Amoxicillin (if applicable)"
+                        />
+                    </div>
+                    <div>
+                        <FormInput
+                            form={form}
+                            name="category"
+                            label="Category"
+                            placeholder="e.g. Antibiotic"
+                        />
+                    </div>
 
-                    <FormInput
-                        form={form}
-                        name="category"
-                        label="Category"
-                        placeholder="e.g. Antibiotic"
-                    />
+                    {/* Row 3: Unit & Dosage Form */}
+                    <div>
+                        <FormInput
+                            form={form}
+                            name="unit"
+                            label="Unit"
+                            required
+                            placeholder="e.g. tablets"
+                        />
+                    </div>
+                    <div>
+                        <FormInput
+                            form={form}
+                            name="dosage_form"
+                            label="Dosage Form"
+                            placeholder="e.g. capsule, syrup"
+                        />
+                    </div>
 
-                    <FormInput
-                        form={form}
-                        name="manufacturer"
-                        label="Manufacturer"
-                        placeholder="e.g. Pharma Inc."
-                    />
+                    {/* Row 4: Manufacturer (Full Width) */}
+                    <div className="col-span-2">
+                        <FormInput
+                            form={form}
+                            name="manufacturer"
+                            label="Manufacturer"
+                            placeholder="e.g. Pharma Inc."
+                        />
+                    </div>
 
-                    <FormInput
-                        form={form}
-                        name="unit"
-                        label="Unit"
-                        required
-                        placeholder="e.g. tablets"
-                    />
+                    {/* Row 5: Strength & Reorder level */}
+                    <div>
+                        <FormInput
+                            form={form}
+                            name="strength"
+                            label="Strength"
+                            placeholder="e.g. 500mg"
+                        />
+                    </div>
+                    <div>
+                        <FormInput
+                            form={form}
+                            name="reorder_level"
+                            label="Reorder Level"
+                            required
+                            type="number"
+                            min={0}
+                            transform={(value) => {
+                                const n = Number(value);
+                                return Number.isFinite(n) ? n : 0;
+                            }}
+                        />
+                    </div>
 
-                    <FormInput
-                        form={form}
-                        name="dosage_form"
-                        label="Dosage Form"
-                        placeholder="e.g. capsule, syrup"
-                    />
-
-                    <FormInput
-                        form={form}
-                        name="strength"
-                        label="Strength"
-                        placeholder="e.g. 500mg"
-                    />
-
-                    <FormInput
-                        form={form}
-                        name="reorder_level"
-                        label="Reorder Level"
-                        required
-                        type="number"
-                        min={0}
-                        transform={(value) => {
-                            const n = Number(value);
-
-                            return Number.isFinite(n) ? n : 0;
-                        }}
-                    />
-
-                    <FormCheckbox
-                        form={form}
-                        name="is_active"
-                        label="Active"
-                    />
-                </>
+                    {/* Row 6: Description (Full Width) */}
+                    <div className="col-span-2">
+                        <FormTextarea
+                            form={form}
+                            name="description"
+                            label="Description"
+                            placeholder="Enter the drug description..."
+                        />
+                    </div>
+                </div>
             )}
         </FormModal>
     );
 }
-
