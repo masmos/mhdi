@@ -2,7 +2,6 @@ import { Edit, Plus, Pencil, SquarePen } from 'lucide-react';
 import { FormInput } from '@/components/shared/form/FormInput';
 import FormModal from '@/components/shared/FormModal';
 import { Button } from '@/components/ui/button';
-import { FormTextarea } from '@/components/shared/form/FormTextarea';
 
 export default function DrugFormModal({ drug }: any) {
     const isEdit = !!drug;
@@ -130,16 +129,6 @@ export default function DrugFormModal({ drug }: any) {
                                 const n = Number(value);
                                 return Number.isFinite(n) ? n : 0;
                             }}
-                        />
-                    </div>
-
-                    {/* Row 6: Description (Full Width) */}
-                    <div className="col-span-2">
-                        <FormTextarea
-                            form={form}
-                            name="description"
-                            label="Description"
-                            placeholder="Enter the drug description..."
                         />
                     </div>
                 </div>
