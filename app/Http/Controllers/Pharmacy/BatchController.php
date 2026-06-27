@@ -39,9 +39,9 @@ class BatchController extends Controller
             ->when($request->expiry === 'expired', fn($q) => $q->where('expiry_date', '<', now()))
             ->when($request->expiry === 'soon', fn($q) => $q->whereBetween('expiry_date', [now(), now()->addDays(30)]))
             ->orderBy('expiry_date')
-            ->paginate(15);
+            ->get();
 
-        return Inertia::render('Pharmacy/Batches/Index', [
+        return Inertia::render('pharmacy/batches/index', [
             'batches' => $batches,
             'filters' => $request->only(['search', 'status', 'expiry']),
         ]);
