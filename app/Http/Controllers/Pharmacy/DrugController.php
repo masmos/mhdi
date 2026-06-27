@@ -27,7 +27,8 @@ class DrugController extends Controller
             ->when($request->category, fn($q, $c) => $q->where('category', $c))
             ->when($request->status === 'active', fn($q) => $q->where('is_active', true))
             ->when($request->status === 'inactive', fn($q) => $q->where('is_active', false))
-            ->paginate(15);
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $categories = Drug::distinct()->pluck('category')->filter()->values();
 
@@ -65,10 +66,15 @@ class DrugController extends Controller
     public function destroy(Drug $drug): RedirectResponse
     {
         $this->authorize('delete_drugs');
+
         if ($drug->batches()->where('status', 'active')->exists()) {
-            return back()->with('error', 'Cannot delete drug with active batches.');
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'message' => 'Cannot delete drug with active batches.'
+            ]);
         }
+
         $drug->delete();
+
         return redirect()->route('drugs.index')->with('success', 'Drug deleted.');
     }
 }

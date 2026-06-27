@@ -1,7 +1,4 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { dashboard } from '@/routes';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DashboardPageProps } from '@/types/inertia';
 import { AlertCircle, AlertTriangle, Building2, ClipboardList, Package, Pill, TrendingUp } from 'lucide-react';
 import {
     LineChart,
@@ -19,6 +16,9 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import Heading from '@/components/heading';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { dashboard } from '@/routes';
+import type { DashboardPageProps } from '@/types/inertia';
 
 const COLORS = ['#22c55e', '#eab308', '#ef4444', '#3b82f6', '#8b5cf6'];
 

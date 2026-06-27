@@ -1,26 +1,32 @@
+import { Edit, Plus, Pencil, SquarePen } from 'lucide-react';
+import { FormCheckbox } from '@/components/shared/form/FormCheckbox';
 import { FormInput } from '@/components/shared/form/FormInput';
-import { FormTextarea } from '@/components/shared/form/FormTextarea';
 import FormModal from '@/components/shared/FormModal';
 import { Button } from '@/components/ui/button';
-import { Edit, Pen, Pencil, Plus, SquarePen } from 'lucide-react';
 
 export default function DrugFormModal({ drug }: any) {
-    const isEdit = !! drug;
+    const isEdit = !!drug;
+
     return (
         <FormModal
-            key={isEdit ? `edit-drug-${drug.id}-${drug.updated_at ?? drug.name}` : 'create-drug'}
-            title={isEdit ? `Edit Drug: ${drug.name}` : 'Add New Drug'}
-            url={
+            key={
                 isEdit
-                    ? `/drugs/${drug.id}`
-                    : '/drugs'
+                    ? `edit-drug-${drug.id}-${drug.updated_at ?? drug.name}`
+                    : 'create-drug'
             }
+            title={isEdit ? `Edit Drug: ${drug.name}` : 'Add New Drug'}
+            url={isEdit ? `/drugs/${drug.id}` : '/drugs'}
             method={isEdit ? 'patch' : 'post'}
             initialData={{
                 name: drug?.name ?? '',
-                code: drug?.code ?? '',
-                description: drug?.description ?? '',
-                active: drug ? !!drug.active : true,
+                generic_name: drug?.generic_name ?? '',
+                category: drug?.category ?? '',
+                manufacturer: drug?.manufacturer ?? '',
+                unit: drug?.unit ?? '',
+                dosage_form: drug?.dosage_form ?? '',
+                strength: drug?.strength ?? '',
+                reorder_level: drug?.reorder_level ?? 0,
+                is_active: drug ? !!drug.is_active : true,
             }}
             submitLabel={
                 isEdit ? (
@@ -47,19 +53,76 @@ export default function DrugFormModal({ drug }: any) {
                     <FormInput
                         form={form}
                         name="name"
-                        label= "Drug Name"
+                        label="Drug Name"
                         required
-                        placeholder="e.g. "
+                        placeholder="e.g. Amoxicillin"
                     />
 
-                    <FormTextarea
+                    <FormInput
                         form={form}
-                        name="description"
-                        label="Description"
-                        placeholder="Brief description of the department"
+                        name="generic_name"
+                        label="Generic Name"
+                        placeholder="e.g. Amoxicillin (if applicable)"
+                    />
+
+                    <FormInput
+                        form={form}
+                        name="category"
+                        label="Category"
+                        placeholder="e.g. Antibiotic"
+                    />
+
+                    <FormInput
+                        form={form}
+                        name="manufacturer"
+                        label="Manufacturer"
+                        placeholder="e.g. Pharma Inc."
+                    />
+
+                    <FormInput
+                        form={form}
+                        name="unit"
+                        label="Unit"
+                        required
+                        placeholder="e.g. tablets"
+                    />
+
+                    <FormInput
+                        form={form}
+                        name="dosage_form"
+                        label="Dosage Form"
+                        placeholder="e.g. capsule, syrup"
+                    />
+
+                    <FormInput
+                        form={form}
+                        name="strength"
+                        label="Strength"
+                        placeholder="e.g. 500mg"
+                    />
+
+                    <FormInput
+                        form={form}
+                        name="reorder_level"
+                        label="Reorder Level"
+                        required
+                        type="number"
+                        min={0}
+                        transform={(value) => {
+                            const n = Number(value);
+
+                            return Number.isFinite(n) ? n : 0;
+                        }}
+                    />
+
+                    <FormCheckbox
+                        form={form}
+                        name="is_active"
+                        label="Active"
                     />
                 </>
             )}
         </FormModal>
     );
 }
+

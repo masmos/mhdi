@@ -1,9 +1,11 @@
 import { Head, usePage } from '@inertiajs/react';
-import type { Drug } from '@/types';
-import Heading from '@/components/heading';
 import { Pill } from 'lucide-react';
-import EmptyState from '@/components/shared/EmptyState';
+import Heading from '@/components/heading';
 import DrugFormModal from '@/components/pharmacy/drugs/DrugFormModal';
+import EmptyState from '@/components/shared/EmptyState';
+import type { Drug } from '@/types';
+import DrugList from '@/components/pharmacy/drugs/DrugList';
+
 
 export default function Drugs() {
     const { drugs } = usePage<{ drugs: Drug[] }>().props;
@@ -15,7 +17,6 @@ export default function Drugs() {
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
                 <div className="flex items-center justify-between">
                     <Heading title="Drugs" description="Manage the hospital drug catalogue." />
-                    {hasDrugs && <DrugFormModal />}
                 </div>
 
                 {!hasDrugs ? (
@@ -29,9 +30,10 @@ export default function Drugs() {
                     </div>
                 ) : (
                     <div>
-                      {/*   <DrugList /> */}
+                        <DrugList />
                     </div>
                 )}
+
             </div>
         </>
     );

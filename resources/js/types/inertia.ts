@@ -1,5 +1,5 @@
-import { PageProps as InertiaPageProps } from '@inertiajs/core';
-import { User, Supplier, Drug, Batch, UsageRecord, PaginatedResponse, DashboardStats, UsageTrend, ExpiryDistribution, TopDrug, DepartmentUsage } from './index';
+import type { PageProps as InertiaPageProps } from '@inertiajs/core';
+import type { User, Supplier, Drug, Batch, UsageRecord, PaginatedResponse, DashboardStats, UsageTrend, ExpiryDistribution, TopDrug, DepartmentUsage } from './index';
 
 export interface PageProps extends InertiaPageProps {
    auth: { user: User };
