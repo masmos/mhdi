@@ -233,7 +233,7 @@ export default function Dashboard({
                     </Link>
 
                     <Link
-                        href="/inventory/expiry"
+                        href="/alerts"
                         className="p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition text-center"
                     >
                         <AlertTriangle className="h-6 w-6 text-yellow-600 mx-auto" />
@@ -241,7 +241,7 @@ export default function Dashboard({
                     </Link>
 
                     <Link
-                        href="/usage"
+                        href="/dispense"
                         className="p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition text-center"
                     >
                         <ClipboardList className="h-6 w-6 text-purple-600 mx-auto" />

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('expiry_notifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('batch_id')->constrained()->onDelete('cascade');
-            $table->enum('notification_type', ['warning', 'expired']);
+            $table->enum('notification_type', ['warning', 'expiring_soon','expired', 'low_stock', 'out_of_stock']);
             $table->timestamp('sent_at')->useCurrent();
             $table->json('sent_to')->nullable();
             $table->boolean('is_read')->default(false);

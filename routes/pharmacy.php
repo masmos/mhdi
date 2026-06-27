@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Pharmacy\AlertController;
 use App\Http\Controllers\Pharmacy\BatchController;
 use App\Http\Controllers\Pharmacy\DispenseController;
 use App\Http\Controllers\Pharmacy\DrugController;
@@ -35,6 +36,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/inventory/expiry', [InventoryController::class, 'expiryView'])->name('inventory.expiry');
     Route::get('/inventory/low-stock', [InventoryController::class, 'lowStock'])->name('inventory.low-stock');
 
+     // Alert Routes
+    Route::get('/alerts', [AlertController::class, 'index'])->name('alerts.index');
+    Route::post('/alerts/{id}/resolve', [AlertController::class, 'resolve'])->name('alerts.resolve');
+    Route::post('/alerts/resolve-all', [AlertController::class, 'resolveAll'])->name('alerts.resolve-all');
+    
     // Reports
     Route::prefix('reports')->name('reports.')->group(function () {
         Route::get('/', [ReportController::class, 'index'])->name('index');
