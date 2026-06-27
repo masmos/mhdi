@@ -24,8 +24,8 @@ class SupplierController extends Controller
             ->when($request->status === 'active', fn($q) => $q->active())
             ->when($request->status === 'inactive', fn($q) => $q->where('is_active', false))
             ->orderBy($request->sort ?? 'name', $request->direction ?? 'asc')
-            ->paginate($request->per_page ?? 15)
-            ->through(fn($s) => [
+            ->get()
+            ->map(fn($s) => [
                 'id' => $s->id,
                 'name' => $s->name,
                 'contact_person' => $s->contact_person,
@@ -40,7 +40,7 @@ class SupplierController extends Controller
                 'created_at' => $s->created_at,
             ]);
 
-        return Inertia::render('Pharmacy/Suppliers/Index', [
+        return Inertia::render('pharmacy/suppliers/index', [
             'suppliers' => $suppliers,
             'filters' => $request->only(['search', 'status', 'sort', 'direction']),
         ]);
