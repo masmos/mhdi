@@ -46,12 +46,6 @@ class SupplierController extends Controller
         ]);
     }
 
-    public function create(): Response
-    {
-        $this->authorize('create_suppliers');
-        return Inertia::render('Pharmacy/Suppliers/Create');
-    }
-
     public function store(SupplierStoreRequest $request): RedirectResponse
     {
         $supplier = Supplier::create($request->validated());
@@ -84,7 +78,7 @@ class SupplierController extends Controller
                 'status' => $b->status,
             ]);
 
-        return Inertia::render('Pharmacy/Suppliers/Show', [
+        return Inertia::render('pharmacy/suppliers/show', [
             'supplier' => $supplier,
             'stats' => $stats,
             'recentDeliveries' => $recent,
@@ -94,7 +88,7 @@ class SupplierController extends Controller
     public function edit(Supplier $supplier): Response
     {
         $this->authorize('edit_suppliers');
-        return Inertia::render('Pharmacy/Suppliers/Edit', ['supplier' => $supplier]);
+        return Inertia::render('pharmacy/suppliers/edit', ['supplier' => $supplier]);
     }
 
     public function update(SupplierUpdateRequest $request, Supplier $supplier): RedirectResponse

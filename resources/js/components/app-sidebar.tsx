@@ -34,7 +34,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Batches',
-        href: '/suppliers',
+        href: '/batches',
         icon: Boxes,
     },
     {
