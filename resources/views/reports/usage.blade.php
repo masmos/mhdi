@@ -1,50 +1,144 @@
+{{-- resources/views/reports/usage.blade.php --}}
 <!DOCTYPE html>
 <html>
-
-    <head>
-        <title>Usage Report</title>
-        <style>
-            body {
-                font-family: DejaVu Sans, sans-serif;
-            }
-
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            th,
-            td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-            }
-
-            th {
-                background: #f2f2f2;
-            }
-        </style>
-    </head>
-
-    <body>
+<head>
+    <meta charset="utf-8">
+    <title>{{ $title }}</title>
+    <style>
+        body { 
+            font-family: DejaVu Sans, sans-serif; 
+            margin: 20px;
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        .header h1 { 
+            font-size: 24px; 
+            margin: 0; 
+            color: #1a56db;
+        }
+        .header p { 
+            font-size: 12px; 
+            color: #666; 
+            margin: 5px 0; 
+        }
+        .header .count {
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 10px; 
+            margin-top: 15px;
+        }
+        th { 
+            background-color: #f2f2f2; 
+            font-weight: bold; 
+            padding: 8px 6px; 
+            text-align: left; 
+            border: 1px solid #ddd; 
+            color: #333;
+        }
+        td { 
+            padding: 6px; 
+            border: 1px solid #ddd; 
+        }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .footer { 
+            text-align: center; 
+            font-size: 10px; 
+            color: #666; 
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+        .summary-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .text-muted { color: #999; }
+    </style>
+</head>
+<body>
+    <div class="header">
         <h1>{{ $title }}</h1>
-        <p>Period: {{ $period }}</p>
         <p>Generated: {{ $date }}</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Drug</th>
-                    <th>Total Used</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($usage as $item)
-                    <tr>
-                        <td>{{ $item['drug'] }}</td>
-                        <td>{{ $item['total'] }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
+        <p class="count">Total Records: {{ $usage_records->count() }}</p>
+        <p class="count">Total Units Dispensed: {{ $usage_records->sum('quantity_used') }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Drug</th>
+                <th>Batch Number</th>
+                <th class="text-right">Quantity</th>
+                <th>Department</th>
+                <th>Patient ID</th>
+                <th>Administered By</th>
+                <th>Usage Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($usage_records as $record)
+            <tr>
+                <td>{{ $record->id }}</td>
+                <td><strong>{{ $record->drug->name ?? 'N/A' }}</strong></td>
+                <td>{{ $record->batch->batch_number ?? 'N/A' }}</td>
+                <td class="text-right">{{ $record->quantity_used }}</td>
+                <td>{{ $record->department ?? 'N/A' }}</td>
+                <td>{{ $record->patient_id ?? 'N/A' }}</td>
+                <td>{{ $record->administrator->name ?? 'N/A' }}</td>
+                <td>{{ $record->usage_date->format('Y-m-d H:i') }}</td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="8" style="text-align: center; color: #999; padding: 20px;">
+                    No usage records found.
+                </td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+
+    <!-- Summary Box -->
+    <div class="summary-box">
+        <table style="width: auto; margin: 0 auto; border: none;">
+            <tr>
+                <td style="border: none; padding: 5px 15px;">
+                    <strong>Total Records:</strong> 
+                    {{ $usage_records->count() }}
+                </td>
+                <td style="border: none; padding: 5px 15px;">
+                    <strong>Total Units:</strong> 
+                    {{ $usage_records->sum('quantity_used') }}
+                </td>
+                <td style="border: none; padding: 5px 15px;">
+                    <strong>Departments:</strong> 
+                    {{ $usage_records->pluck('department')->filter()->unique()->count() }}
+                </td>
+                <td style="border: none; padding: 5px 15px;">
+                    <strong>Patients:</strong> 
+                    {{ $usage_records->pluck('patient_id')->filter()->unique()->count() }}
+                </td>
+            </tr>
         </table>
-    </body>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Mpigi Pharmacy Management System</p>
+        <p>{{ now()->format('Y-m-d H:i:s') }}</p>
+    </div>
+</body>
 </html>

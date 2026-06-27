@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class ExpiryNotification extends Model
 {
+    use LogsActivity;
+    
     protected $fillable = [
         'batch_id',
         'notification_type',
@@ -23,5 +27,13 @@ class ExpiryNotification extends Model
     public function batch()
     {
         return $this->belongsTo(Batch::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

@@ -6,10 +6,12 @@ use App\Exceptions\InsufficientStockException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Batch extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
     
     protected $fillable = [
         'drug_id',
@@ -157,5 +159,13 @@ class Batch extends Model
     {
         return $query->active()
             ->whereBetween('expiry_date', [now(), now()->addDays($days)]);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

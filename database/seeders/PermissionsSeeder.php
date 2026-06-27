@@ -42,6 +42,10 @@ class PermissionsSeeder extends Seeder
             // Users
             'manage_users',
             'manage_roles',
+
+            // activity logs
+            'view_activity_logs',
+            'clear_activity_logs',
         ];
 
         foreach ($permissions as $perm) {
@@ -99,6 +103,16 @@ class PermissionsSeeder extends Seeder
             'view_usage',
             'view_reports'
         ]);
+
+        // Assign to roles
+        $superAdmin = Role::findByName('super_admin');
+        $superAdmin->givePermissionTo(['view_activity_logs', 'clear_activity_logs']);
+
+        $pharmacist = Role::findByName('pharmacist');
+        $pharmacist->givePermissionTo(['view_activity_logs']);
+
+        $director = Role::findByName('director');
+        $director->givePermissionTo(['view_activity_logs']);
 
         // Create admin user
         $admin = User::firstOrCreate([

@@ -149,7 +149,7 @@ class AlertController extends Controller
         foreach ($lowStockDrugs as $drug) {
             $notification = ExpiryNotification::firstOrCreate(
                 [
-                    'batch_id' => 0, 
+                    'batch_id' => null, 
                     'notification_type' => 'low_stock',
                 ],
                 [

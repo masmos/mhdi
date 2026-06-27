@@ -54,12 +54,12 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Reports',
-        href: '/stock',
+        href: '/reports',
         icon: FileChartColumn,
     },
     {
-        title: 'Audit Log',
-        href: '/pharmacy/stock',
+        title: 'Activity Log',
+        href: '/activity-logs',
         icon: ScrollText,
     },
     {
