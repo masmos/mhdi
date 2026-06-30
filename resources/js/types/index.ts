@@ -2,17 +2,6 @@ export type * from './auth';
 export type * from './navigation';
 export type * from './ui';
 
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-    roles: string[];
-    permissions: string[];
-}
-
 export interface Supplier {
     id: number;
     name: string;
@@ -226,4 +215,61 @@ export interface PaginatedResponse<T> {
     next_page_url: string | null;
     prev_page_url: string | null;
     path: string;
+}
+
+
+// Update the User interface to include roles and permissions
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string | null;
+    created_at: string;
+    updated_at: string;
+    roles: Role[];  // Changed from string[] to Role[]
+    permissions: Permission[];
+    password?: string;
+    remember_token?: string | null;
+    last_login_at?: string | null;
+    activity?: Activity[];
+}
+
+export interface Role {
+    id: number;
+    name: string;
+    guard_name: string;
+    permissions?: Permission[];
+    created_at: string;
+    updated_at: string;
+    pivot?: {
+        model_id: number;
+        role_id: number;
+        model_type: string;
+    };
+}
+
+export interface Permission {
+    id: number;
+    name: string;
+    guard_name: string;
+    created_at: string;
+    updated_at: string;
+    pivot?: {
+        model_id: number;
+        permission_id: number;
+        model_type: string;
+    };
+}
+
+export interface Activity {
+    id: number;
+    log_name: string;
+    description: string;
+    subject_id: number | null;
+    subject_type: string | null;
+    causer_id: number | null;
+    causer_type: string | null;
+    properties: Record<string, any>;
+    created_at: string;
+    updated_at: string;
 }
