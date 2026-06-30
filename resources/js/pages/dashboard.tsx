@@ -217,7 +217,7 @@ export default function Dashboard({
                 {/* Quick Actions */}
                 <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
                     <Link
-                        href="/drugs/create"
+                        href="/drugs"
                         className="p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition text-center"
                     >
                         <Pill className="h-6 w-6 text-blue-600 mx-auto" />
